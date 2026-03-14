@@ -1,0 +1,707 @@
+{
+  "generated_at": "2026-03-10T21:46:59.091935+00:00",
+  "seed": 20260310,
+  "proposal_slug": "04_friendly_round_85pct",
+  "cards_dir": "/home/ber0061/Repositories/Lost_cities_card_images/cards",
+  "output_dir": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png",
+  "preview_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/selection_grid.png",
+  "strategy": {
+    "name": "greedy_farthest_point_sampling",
+    "first_pick": "deterministic random pick per color",
+    "distance": "euclidean distance over weighted RGB thumbnail, grayscale, edge map, HSV histogram, and RGB summary stats",
+    "deck_slots": [
+      "wager_1",
+      "wager_2",
+      "wager_3",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "09",
+      "10"
+    ]
+  },
+  "colors": {
+    "white": {
+      "candidate_count": 63,
+      "selected": [
+        {
+          "label": "X",
+          "slot": "wager_1",
+          "preview_header": "X1",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_wager_1.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/07_chatgpt_image_mar_10_2026_01_57_39_pm_r2c1.png",
+          "selection_rank": 1,
+          "min_distance_to_selected": null
+        },
+        {
+          "label": "X",
+          "slot": "wager_2",
+          "preview_header": "X2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_wager_2.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/03_chatgpt_image_mar_10_2026_01_57_29_pm_r1c3.png",
+          "selection_rank": 2,
+          "min_distance_to_selected": 1.5086275339126587
+        },
+        {
+          "label": "X",
+          "slot": "wager_3",
+          "preview_header": "X3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_wager_3.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/03_chatgpt_image_mar_10_2026_01_57_29_pm_r2c2.png",
+          "selection_rank": 3,
+          "min_distance_to_selected": 1.4136475324630737
+        },
+        {
+          "label": "2",
+          "slot": "02",
+          "preview_header": "2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_02.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/04_chatgpt_image_mar_10_2026_01_57_32_pm_r3c1.png",
+          "selection_rank": 4,
+          "min_distance_to_selected": 1.3834642171859741
+        },
+        {
+          "label": "3",
+          "slot": "03",
+          "preview_header": "3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_03.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/04_chatgpt_image_mar_10_2026_01_57_32_pm_r1c2.png",
+          "selection_rank": 5,
+          "min_distance_to_selected": 1.3619662523269653
+        },
+        {
+          "label": "4",
+          "slot": "04",
+          "preview_header": "4",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_04.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/03_chatgpt_image_mar_10_2026_01_57_29_pm_r1c1.png",
+          "selection_rank": 6,
+          "min_distance_to_selected": 1.3576151132583618
+        },
+        {
+          "label": "5",
+          "slot": "05",
+          "preview_header": "5",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_05.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/07_chatgpt_image_mar_10_2026_01_57_39_pm_r3c2.png",
+          "selection_rank": 7,
+          "min_distance_to_selected": 1.355434536933899
+        },
+        {
+          "label": "6",
+          "slot": "06",
+          "preview_header": "6",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_06.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/04_chatgpt_image_mar_10_2026_01_57_32_pm_r3c3.png",
+          "selection_rank": 8,
+          "min_distance_to_selected": 1.2880078554153442
+        },
+        {
+          "label": "7",
+          "slot": "07",
+          "preview_header": "7",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_07.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/04_chatgpt_image_mar_10_2026_01_57_32_pm_r3c2.png",
+          "selection_rank": 9,
+          "min_distance_to_selected": 1.2817000150680542
+        },
+        {
+          "label": "8",
+          "slot": "08",
+          "preview_header": "8",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_08.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/05_chatgpt_image_mar_10_2026_01_57_34_pm_r1c3.png",
+          "selection_rank": 10,
+          "min_distance_to_selected": 1.2784194946289062
+        },
+        {
+          "label": "9",
+          "slot": "09",
+          "preview_header": "9",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_09.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/03_chatgpt_image_mar_10_2026_01_57_29_pm_r3c3.png",
+          "selection_rank": 11,
+          "min_distance_to_selected": 1.2764835357666016
+        },
+        {
+          "label": "10",
+          "slot": "10",
+          "preview_header": "10",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/white_10.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/white/03_chatgpt_image_mar_10_2026_01_57_29_pm_r3c2.png",
+          "selection_rank": 12,
+          "min_distance_to_selected": 1.2739555835723877
+        }
+      ]
+    },
+    "blue": {
+      "candidate_count": 36,
+      "selected": [
+        {
+          "label": "X",
+          "slot": "wager_1",
+          "preview_header": "X1",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_wager_1.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/14_chatgpt_image_mar_10_2026_01_57_55_pm_r2c1.png",
+          "selection_rank": 1,
+          "min_distance_to_selected": null
+        },
+        {
+          "label": "X",
+          "slot": "wager_2",
+          "preview_header": "X2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_wager_2.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/16_chatgpt_image_mar_10_2026_01_57_59_pm_r3c3.png",
+          "selection_rank": 2,
+          "min_distance_to_selected": 0.8585294485092163
+        },
+        {
+          "label": "X",
+          "slot": "wager_3",
+          "preview_header": "X3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_wager_3.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/16_chatgpt_image_mar_10_2026_01_57_59_pm_r1c2.png",
+          "selection_rank": 3,
+          "min_distance_to_selected": 0.8119361996650696
+        },
+        {
+          "label": "2",
+          "slot": "02",
+          "preview_header": "2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_02.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/16_chatgpt_image_mar_10_2026_01_57_59_pm_r3c1.png",
+          "selection_rank": 4,
+          "min_distance_to_selected": 0.7596479654312134
+        },
+        {
+          "label": "3",
+          "slot": "03",
+          "preview_header": "3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_03.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/13_chatgpt_image_mar_10_2026_01_57_53_pm_r1c3.png",
+          "selection_rank": 5,
+          "min_distance_to_selected": 0.7564648985862732
+        },
+        {
+          "label": "4",
+          "slot": "04",
+          "preview_header": "4",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_04.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/14_chatgpt_image_mar_10_2026_01_57_55_pm_r2c3.png",
+          "selection_rank": 6,
+          "min_distance_to_selected": 0.7493576407432556
+        },
+        {
+          "label": "5",
+          "slot": "05",
+          "preview_header": "5",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_05.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/13_chatgpt_image_mar_10_2026_01_57_53_pm_r3c3.png",
+          "selection_rank": 7,
+          "min_distance_to_selected": 0.7277016043663025
+        },
+        {
+          "label": "6",
+          "slot": "06",
+          "preview_header": "6",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_06.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/13_chatgpt_image_mar_10_2026_01_57_53_pm_r2c2.png",
+          "selection_rank": 8,
+          "min_distance_to_selected": 0.6924774050712585
+        },
+        {
+          "label": "7",
+          "slot": "07",
+          "preview_header": "7",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_07.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/16_chatgpt_image_mar_10_2026_01_57_59_pm_r1c3.png",
+          "selection_rank": 9,
+          "min_distance_to_selected": 0.6705946922302246
+        },
+        {
+          "label": "8",
+          "slot": "08",
+          "preview_header": "8",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_08.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/16_chatgpt_image_mar_10_2026_01_57_59_pm_r2c1.png",
+          "selection_rank": 10,
+          "min_distance_to_selected": 0.6702743768692017
+        },
+        {
+          "label": "9",
+          "slot": "09",
+          "preview_header": "9",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_09.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/13_chatgpt_image_mar_10_2026_01_57_53_pm_r1c2.png",
+          "selection_rank": 11,
+          "min_distance_to_selected": 0.6505105495452881
+        },
+        {
+          "label": "10",
+          "slot": "10",
+          "preview_header": "10",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/blue_10.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/blue/16_chatgpt_image_mar_10_2026_01_57_59_pm_r2c3.png",
+          "selection_rank": 12,
+          "min_distance_to_selected": 0.634598433971405
+        }
+      ]
+    },
+    "green": {
+      "candidate_count": 27,
+      "selected": [
+        {
+          "label": "X",
+          "slot": "wager_1",
+          "preview_header": "X1",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_wager_1.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/19_chatgpt_image_mar_10_2026_01_58_05_pm_r1c1.png",
+          "selection_rank": 1,
+          "min_distance_to_selected": null
+        },
+        {
+          "label": "X",
+          "slot": "wager_2",
+          "preview_header": "X2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_wager_2.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/18_chatgpt_image_mar_10_2026_01_58_03_pm_r1c2.png",
+          "selection_rank": 2,
+          "min_distance_to_selected": 1.110591173171997
+        },
+        {
+          "label": "X",
+          "slot": "wager_3",
+          "preview_header": "X3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_wager_3.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/19_chatgpt_image_mar_10_2026_01_58_05_pm_r2c3.png",
+          "selection_rank": 3,
+          "min_distance_to_selected": 1.0973941087722778
+        },
+        {
+          "label": "2",
+          "slot": "02",
+          "preview_header": "2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_02.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/18_chatgpt_image_mar_10_2026_01_58_03_pm_r1c3.png",
+          "selection_rank": 4,
+          "min_distance_to_selected": 1.0733413696289062
+        },
+        {
+          "label": "3",
+          "slot": "03",
+          "preview_header": "3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_03.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/18_chatgpt_image_mar_10_2026_01_58_03_pm_r2c2.png",
+          "selection_rank": 5,
+          "min_distance_to_selected": 1.0130823850631714
+        },
+        {
+          "label": "4",
+          "slot": "04",
+          "preview_header": "4",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_04.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/18_chatgpt_image_mar_10_2026_01_58_03_pm_r3c2.png",
+          "selection_rank": 6,
+          "min_distance_to_selected": 0.9948952794075012
+        },
+        {
+          "label": "5",
+          "slot": "05",
+          "preview_header": "5",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_05.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/19_chatgpt_image_mar_10_2026_01_58_05_pm_r3c2.png",
+          "selection_rank": 7,
+          "min_distance_to_selected": 0.9886959195137024
+        },
+        {
+          "label": "6",
+          "slot": "06",
+          "preview_header": "6",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_06.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/19_chatgpt_image_mar_10_2026_01_58_05_pm_r2c1.png",
+          "selection_rank": 8,
+          "min_distance_to_selected": 0.9853135347366333
+        },
+        {
+          "label": "7",
+          "slot": "07",
+          "preview_header": "7",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_07.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/17_chatgpt_image_mar_10_2026_01_58_02_pm_r3c2.png",
+          "selection_rank": 9,
+          "min_distance_to_selected": 0.984361469745636
+        },
+        {
+          "label": "8",
+          "slot": "08",
+          "preview_header": "8",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_08.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/18_chatgpt_image_mar_10_2026_01_58_03_pm_r2c1.png",
+          "selection_rank": 10,
+          "min_distance_to_selected": 0.9834585785865784
+        },
+        {
+          "label": "9",
+          "slot": "09",
+          "preview_header": "9",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_09.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/17_chatgpt_image_mar_10_2026_01_58_02_pm_r2c2.png",
+          "selection_rank": 11,
+          "min_distance_to_selected": 0.9750269651412964
+        },
+        {
+          "label": "10",
+          "slot": "10",
+          "preview_header": "10",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/green_10.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/green/17_chatgpt_image_mar_10_2026_01_58_02_pm_r3c3.png",
+          "selection_rank": 12,
+          "min_distance_to_selected": 0.9520040154457092
+        }
+      ]
+    },
+    "yellow": {
+      "candidate_count": 27,
+      "selected": [
+        {
+          "label": "X",
+          "slot": "wager_1",
+          "preview_header": "X1",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_wager_1.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/12_chatgpt_image_mar_10_2026_01_57_51_pm_r1c2.png",
+          "selection_rank": 1,
+          "min_distance_to_selected": null
+        },
+        {
+          "label": "X",
+          "slot": "wager_2",
+          "preview_header": "X2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_wager_2.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/11_chatgpt_image_mar_10_2026_01_57_49_pm_r3c3.png",
+          "selection_rank": 2,
+          "min_distance_to_selected": 0.8626924753189087
+        },
+        {
+          "label": "X",
+          "slot": "wager_3",
+          "preview_header": "X3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_wager_3.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/11_chatgpt_image_mar_10_2026_01_57_49_pm_r1c1.png",
+          "selection_rank": 3,
+          "min_distance_to_selected": 0.811820387840271
+        },
+        {
+          "label": "2",
+          "slot": "02",
+          "preview_header": "2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_02.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/11_chatgpt_image_mar_10_2026_01_57_49_pm_r3c2.png",
+          "selection_rank": 4,
+          "min_distance_to_selected": 0.7795761227607727
+        },
+        {
+          "label": "3",
+          "slot": "03",
+          "preview_header": "3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_03.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/11_chatgpt_image_mar_10_2026_01_57_49_pm_r2c3.png",
+          "selection_rank": 5,
+          "min_distance_to_selected": 0.6960582137107849
+        },
+        {
+          "label": "4",
+          "slot": "04",
+          "preview_header": "4",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_04.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/11_chatgpt_image_mar_10_2026_01_57_49_pm_r1c3.png",
+          "selection_rank": 6,
+          "min_distance_to_selected": 0.6777703166007996
+        },
+        {
+          "label": "5",
+          "slot": "05",
+          "preview_header": "5",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_05.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/11_chatgpt_image_mar_10_2026_01_57_49_pm_r2c2.png",
+          "selection_rank": 7,
+          "min_distance_to_selected": 0.6717514991760254
+        },
+        {
+          "label": "6",
+          "slot": "06",
+          "preview_header": "6",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_06.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/12_chatgpt_image_mar_10_2026_01_57_51_pm_r3c1.png",
+          "selection_rank": 8,
+          "min_distance_to_selected": 0.6552252173423767
+        },
+        {
+          "label": "7",
+          "slot": "07",
+          "preview_header": "7",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_07.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/11_chatgpt_image_mar_10_2026_01_57_49_pm_r2c1.png",
+          "selection_rank": 9,
+          "min_distance_to_selected": 0.6511846780776978
+        },
+        {
+          "label": "8",
+          "slot": "08",
+          "preview_header": "8",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_08.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/12_chatgpt_image_mar_10_2026_01_57_51_pm_r1c3.png",
+          "selection_rank": 10,
+          "min_distance_to_selected": 0.6502941250801086
+        },
+        {
+          "label": "9",
+          "slot": "09",
+          "preview_header": "9",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_09.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/11_chatgpt_image_mar_10_2026_01_57_49_pm_r1c2.png",
+          "selection_rank": 11,
+          "min_distance_to_selected": 0.6116474270820618
+        },
+        {
+          "label": "10",
+          "slot": "10",
+          "preview_header": "10",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/yellow_10.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/yellow/12_chatgpt_image_mar_10_2026_01_57_51_pm_r2c3.png",
+          "selection_rank": 12,
+          "min_distance_to_selected": 0.6045322418212891
+        }
+      ]
+    },
+    "red": {
+      "candidate_count": 27,
+      "selected": [
+        {
+          "label": "X",
+          "slot": "wager_1",
+          "preview_header": "X1",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_wager_1.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/22_chatgpt_image_mar_10_2026_01_58_12_pm_r3c1.png",
+          "selection_rank": 1,
+          "min_distance_to_selected": null
+        },
+        {
+          "label": "X",
+          "slot": "wager_2",
+          "preview_header": "X2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_wager_2.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/21_chatgpt_image_mar_10_2026_01_58_10_pm_r3c1.png",
+          "selection_rank": 2,
+          "min_distance_to_selected": 0.9569147229194641
+        },
+        {
+          "label": "X",
+          "slot": "wager_3",
+          "preview_header": "X3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_wager_3.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/20_chatgpt_image_mar_10_2026_01_58_08_pm_r2c2.png",
+          "selection_rank": 3,
+          "min_distance_to_selected": 0.9520403146743774
+        },
+        {
+          "label": "2",
+          "slot": "02",
+          "preview_header": "2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_02.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/22_chatgpt_image_mar_10_2026_01_58_12_pm_r3c2.png",
+          "selection_rank": 4,
+          "min_distance_to_selected": 0.910027265548706
+        },
+        {
+          "label": "3",
+          "slot": "03",
+          "preview_header": "3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_03.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/21_chatgpt_image_mar_10_2026_01_58_10_pm_r2c3.png",
+          "selection_rank": 5,
+          "min_distance_to_selected": 0.8906659483909607
+        },
+        {
+          "label": "4",
+          "slot": "04",
+          "preview_header": "4",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_04.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/22_chatgpt_image_mar_10_2026_01_58_12_pm_r1c2.png",
+          "selection_rank": 6,
+          "min_distance_to_selected": 0.8673281669616699
+        },
+        {
+          "label": "5",
+          "slot": "05",
+          "preview_header": "5",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_05.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/20_chatgpt_image_mar_10_2026_01_58_08_pm_r3c1.png",
+          "selection_rank": 7,
+          "min_distance_to_selected": 0.844526469707489
+        },
+        {
+          "label": "6",
+          "slot": "06",
+          "preview_header": "6",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_06.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/20_chatgpt_image_mar_10_2026_01_58_08_pm_r2c1.png",
+          "selection_rank": 8,
+          "min_distance_to_selected": 0.8433842062950134
+        },
+        {
+          "label": "7",
+          "slot": "07",
+          "preview_header": "7",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_07.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/21_chatgpt_image_mar_10_2026_01_58_10_pm_r3c2.png",
+          "selection_rank": 9,
+          "min_distance_to_selected": 0.8376405239105225
+        },
+        {
+          "label": "8",
+          "slot": "08",
+          "preview_header": "8",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_08.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/22_chatgpt_image_mar_10_2026_01_58_12_pm_r3c3.png",
+          "selection_rank": 10,
+          "min_distance_to_selected": 0.8343923687934875
+        },
+        {
+          "label": "9",
+          "slot": "09",
+          "preview_header": "9",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_09.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/21_chatgpt_image_mar_10_2026_01_58_10_pm_r1c1.png",
+          "selection_rank": 11,
+          "min_distance_to_selected": 0.8181843161582947
+        },
+        {
+          "label": "10",
+          "slot": "10",
+          "preview_header": "10",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/red_10.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/red/22_chatgpt_image_mar_10_2026_01_58_12_pm_r2c3.png",
+          "selection_rank": 12,
+          "min_distance_to_selected": 0.8124010562896729
+        }
+      ]
+    },
+    "purple": {
+      "candidate_count": 18,
+      "selected": [
+        {
+          "label": "X",
+          "slot": "wager_1",
+          "preview_header": "X1",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_wager_1.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/02_chatgpt_image_mar_10_2026_01_57_26_pm_r1c2.png",
+          "selection_rank": 1,
+          "min_distance_to_selected": null
+        },
+        {
+          "label": "X",
+          "slot": "wager_2",
+          "preview_header": "X2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_wager_2.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/02_chatgpt_image_mar_10_2026_01_57_26_pm_r3c1.png",
+          "selection_rank": 2,
+          "min_distance_to_selected": 1.1294053792953491
+        },
+        {
+          "label": "X",
+          "slot": "wager_3",
+          "preview_header": "X3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_wager_3.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/01_chatgpt_image_mar_10_2026_01_57_23_pm_r3c1.png",
+          "selection_rank": 3,
+          "min_distance_to_selected": 0.966698169708252
+        },
+        {
+          "label": "2",
+          "slot": "02",
+          "preview_header": "2",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_02.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/01_chatgpt_image_mar_10_2026_01_57_23_pm_r3c2.png",
+          "selection_rank": 4,
+          "min_distance_to_selected": 0.878042995929718
+        },
+        {
+          "label": "3",
+          "slot": "03",
+          "preview_header": "3",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_03.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/01_chatgpt_image_mar_10_2026_01_57_23_pm_r2c1.png",
+          "selection_rank": 5,
+          "min_distance_to_selected": 0.8680015802383423
+        },
+        {
+          "label": "4",
+          "slot": "04",
+          "preview_header": "4",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_04.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/02_chatgpt_image_mar_10_2026_01_57_26_pm_r2c2.png",
+          "selection_rank": 6,
+          "min_distance_to_selected": 0.8613067269325256
+        },
+        {
+          "label": "5",
+          "slot": "05",
+          "preview_header": "5",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_05.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/01_chatgpt_image_mar_10_2026_01_57_23_pm_r2c2.png",
+          "selection_rank": 7,
+          "min_distance_to_selected": 0.8575378060340881
+        },
+        {
+          "label": "6",
+          "slot": "06",
+          "preview_header": "6",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_06.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/02_chatgpt_image_mar_10_2026_01_57_26_pm_r1c3.png",
+          "selection_rank": 8,
+          "min_distance_to_selected": 0.82888263463974
+        },
+        {
+          "label": "7",
+          "slot": "07",
+          "preview_header": "7",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_07.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/02_chatgpt_image_mar_10_2026_01_57_26_pm_r3c2.png",
+          "selection_rank": 9,
+          "min_distance_to_selected": 0.8256387114524841
+        },
+        {
+          "label": "8",
+          "slot": "08",
+          "preview_header": "8",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_08.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/02_chatgpt_image_mar_10_2026_01_57_26_pm_r1c1.png",
+          "selection_rank": 10,
+          "min_distance_to_selected": 0.8247097730636597
+        },
+        {
+          "label": "9",
+          "slot": "09",
+          "preview_header": "9",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_09.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/02_chatgpt_image_mar_10_2026_01_57_26_pm_r2c3.png",
+          "selection_rank": 11,
+          "min_distance_to_selected": 0.820671021938324
+        },
+        {
+          "label": "10",
+          "slot": "10",
+          "preview_header": "10",
+          "export_path": "/home/ber0061/Repositories/Lost_cities_card_images/assets/cards/png/purple_10.png",
+          "source_path": "/home/ber0061/Repositories/Lost_cities_card_images/cards/purple/01_chatgpt_image_mar_10_2026_01_57_23_pm_r1c2.png",
+          "selection_rank": 12,
+          "min_distance_to_selected": 0.7977443337440491
+        }
+      ]
+    }
+  }
+}

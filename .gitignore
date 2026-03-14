@@ -1,0 +1,17 @@
+# Android / Gradle outputs
+android/.gradle/
+android/build/
+android/app/build/
+android/dist/
+android/local.properties
+
+# IDE files
+.idea/
+android/.idea/
+*.iml
+
+# Imported source packs and generated review exports
+design_reviews/
+lost_cities_mobile_pack/
+lost_cities_mobile_pack_v2/
+lost_cities_mobile_pack_v3/

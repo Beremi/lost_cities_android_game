@@ -1,0 +1,803 @@
+{
+  "name": "Lost Cities mobile pack",
+  "generated_at": "2026-03-07T12:12:14Z",
+  "image_format": "png",
+  "card_dimensions_px": {
+    "width": 420,
+    "height": 640,
+    "corner_radius": 34
+  },
+  "base_game_card_count": 60,
+  "long_variant_card_count": 72,
+  "suits": [
+    {
+      "id": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "theme_blurb": "A warm desert route with dunes, ruins, and sunlit stone.",
+      "icon": "sun",
+      "included_in_base_game": true
+    },
+    {
+      "id": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "theme_blurb": "An icy ascent with snowy ridges and cold light.",
+      "icon": "snow",
+      "included_in_base_game": true
+    },
+    {
+      "id": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "theme_blurb": "A submerged route with waves, moonlight, and an arching ruin.",
+      "icon": "wave",
+      "included_in_base_game": true
+    },
+    {
+      "id": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "theme_blurb": "A jungle route with a stepped shrine under heavy leaves.",
+      "icon": "leaf",
+      "included_in_base_game": true
+    },
+    {
+      "id": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "theme_blurb": "A volcanic route with ash, lava, and a crater glow.",
+      "icon": "flame",
+      "included_in_base_game": true
+    },
+    {
+      "id": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "theme_blurb": "An optional sixth route with a night sky, portal rings, and a crystal tower.",
+      "icon": "star",
+      "included_in_base_game": false
+    }
+  ],
+  "cards": [
+    {
+      "id": "yellow_02",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "expedition",
+      "rank": 2,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_02.png"
+    },
+    {
+      "id": "yellow_03",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "expedition",
+      "rank": 3,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_03.png"
+    },
+    {
+      "id": "yellow_04",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "expedition",
+      "rank": 4,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_04.png"
+    },
+    {
+      "id": "yellow_05",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "expedition",
+      "rank": 5,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_05.png"
+    },
+    {
+      "id": "yellow_06",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "expedition",
+      "rank": 6,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_06.png"
+    },
+    {
+      "id": "yellow_07",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "expedition",
+      "rank": 7,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_07.png"
+    },
+    {
+      "id": "yellow_08",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "expedition",
+      "rank": 8,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_08.png"
+    },
+    {
+      "id": "yellow_09",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "expedition",
+      "rank": 9,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_09.png"
+    },
+    {
+      "id": "yellow_10",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "expedition",
+      "rank": 10,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_10.png"
+    },
+    {
+      "id": "yellow_wager_1",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_wager_1.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "yellow_wager_2",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_wager_2.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "yellow_wager_3",
+      "suit": "yellow",
+      "official_color": "Yellow",
+      "theme_title": "Sun Desert",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/yellow_wager_3.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "white_02",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "expedition",
+      "rank": 2,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_02.png"
+    },
+    {
+      "id": "white_03",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "expedition",
+      "rank": 3,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_03.png"
+    },
+    {
+      "id": "white_04",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "expedition",
+      "rank": 4,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_04.png"
+    },
+    {
+      "id": "white_05",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "expedition",
+      "rank": 5,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_05.png"
+    },
+    {
+      "id": "white_06",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "expedition",
+      "rank": 6,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_06.png"
+    },
+    {
+      "id": "white_07",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "expedition",
+      "rank": 7,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_07.png"
+    },
+    {
+      "id": "white_08",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "expedition",
+      "rank": 8,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_08.png"
+    },
+    {
+      "id": "white_09",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "expedition",
+      "rank": 9,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_09.png"
+    },
+    {
+      "id": "white_10",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "expedition",
+      "rank": 10,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_10.png"
+    },
+    {
+      "id": "white_wager_1",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_wager_1.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "white_wager_2",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_wager_2.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "white_wager_3",
+      "suit": "white",
+      "official_color": "White",
+      "theme_title": "Frost Peaks",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/white_wager_3.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "blue_02",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "expedition",
+      "rank": 2,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_02.png"
+    },
+    {
+      "id": "blue_03",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "expedition",
+      "rank": 3,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_03.png"
+    },
+    {
+      "id": "blue_04",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "expedition",
+      "rank": 4,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_04.png"
+    },
+    {
+      "id": "blue_05",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "expedition",
+      "rank": 5,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_05.png"
+    },
+    {
+      "id": "blue_06",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "expedition",
+      "rank": 6,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_06.png"
+    },
+    {
+      "id": "blue_07",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "expedition",
+      "rank": 7,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_07.png"
+    },
+    {
+      "id": "blue_08",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "expedition",
+      "rank": 8,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_08.png"
+    },
+    {
+      "id": "blue_09",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "expedition",
+      "rank": 9,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_09.png"
+    },
+    {
+      "id": "blue_10",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "expedition",
+      "rank": 10,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_10.png"
+    },
+    {
+      "id": "blue_wager_1",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_wager_1.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "blue_wager_2",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_wager_2.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "blue_wager_3",
+      "suit": "blue",
+      "official_color": "Blue",
+      "theme_title": "Tidal Ruins",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/blue_wager_3.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "green_02",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "expedition",
+      "rank": 2,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_02.png"
+    },
+    {
+      "id": "green_03",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "expedition",
+      "rank": 3,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_03.png"
+    },
+    {
+      "id": "green_04",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "expedition",
+      "rank": 4,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_04.png"
+    },
+    {
+      "id": "green_05",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "expedition",
+      "rank": 5,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_05.png"
+    },
+    {
+      "id": "green_06",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "expedition",
+      "rank": 6,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_06.png"
+    },
+    {
+      "id": "green_07",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "expedition",
+      "rank": 7,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_07.png"
+    },
+    {
+      "id": "green_08",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "expedition",
+      "rank": 8,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_08.png"
+    },
+    {
+      "id": "green_09",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "expedition",
+      "rank": 9,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_09.png"
+    },
+    {
+      "id": "green_10",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "expedition",
+      "rank": 10,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_10.png"
+    },
+    {
+      "id": "green_wager_1",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_wager_1.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "green_wager_2",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_wager_2.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "green_wager_3",
+      "suit": "green",
+      "official_color": "Green",
+      "theme_title": "Canopy Shrine",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/green_wager_3.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "red_02",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "expedition",
+      "rank": 2,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_02.png"
+    },
+    {
+      "id": "red_03",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "expedition",
+      "rank": 3,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_03.png"
+    },
+    {
+      "id": "red_04",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "expedition",
+      "rank": 4,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_04.png"
+    },
+    {
+      "id": "red_05",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "expedition",
+      "rank": 5,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_05.png"
+    },
+    {
+      "id": "red_06",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "expedition",
+      "rank": 6,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_06.png"
+    },
+    {
+      "id": "red_07",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "expedition",
+      "rank": 7,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_07.png"
+    },
+    {
+      "id": "red_08",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "expedition",
+      "rank": 8,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_08.png"
+    },
+    {
+      "id": "red_09",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "expedition",
+      "rank": 9,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_09.png"
+    },
+    {
+      "id": "red_10",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "expedition",
+      "rank": 10,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_10.png"
+    },
+    {
+      "id": "red_wager_1",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_wager_1.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "red_wager_2",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_wager_2.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "red_wager_3",
+      "suit": "red",
+      "official_color": "Red",
+      "theme_title": "Ember Spire",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": true,
+      "path": "assets/cards/png/red_wager_3.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "purple_02",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "expedition",
+      "rank": 2,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_02.png"
+    },
+    {
+      "id": "purple_03",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "expedition",
+      "rank": 3,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_03.png"
+    },
+    {
+      "id": "purple_04",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "expedition",
+      "rank": 4,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_04.png"
+    },
+    {
+      "id": "purple_05",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "expedition",
+      "rank": 5,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_05.png"
+    },
+    {
+      "id": "purple_06",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "expedition",
+      "rank": 6,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_06.png"
+    },
+    {
+      "id": "purple_07",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "expedition",
+      "rank": 7,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_07.png"
+    },
+    {
+      "id": "purple_08",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "expedition",
+      "rank": 8,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_08.png"
+    },
+    {
+      "id": "purple_09",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "expedition",
+      "rank": 9,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_09.png"
+    },
+    {
+      "id": "purple_10",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "expedition",
+      "rank": 10,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_10.png"
+    },
+    {
+      "id": "purple_wager_1",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_wager_1.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "purple_wager_2",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_wager_2.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    },
+    {
+      "id": "purple_wager_3",
+      "suit": "purple",
+      "official_color": "Purple",
+      "theme_title": "Star Vault",
+      "type": "wager",
+      "rank": null,
+      "included_in_base_game": false,
+      "path": "assets/cards/png/purple_wager_3.png",
+      "art_note": "All three wager copies intentionally share the same visual treatment."
+    }
+  ],
+  "card_back": "assets/cards/png/card_back.png"
+}

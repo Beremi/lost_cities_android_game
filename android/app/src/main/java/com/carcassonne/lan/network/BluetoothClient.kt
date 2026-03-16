@@ -1,8 +1,14 @@
 package com.carcassonne.lan.network
 
+import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothSocket
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
+import androidx.core.content.ContextCompat
 import com.carcassonne.lan.model.ClientSession
 import com.carcassonne.lan.model.GenericOkResponse
 import com.carcassonne.lan.model.HeartbeatRequest
@@ -20,10 +26,14 @@ import java.io.BufferedWriter
 import java.io.Closeable
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -57,6 +67,22 @@ class BluetoothClient(private val context: Context) {
                 method = "GET",
                 path = "/api/ping",
                 responseSerializer = PingResponse.serializer(),
+                connectTimeoutMs = PROBE_TIMEOUT_MS,
+                allowBonding = false,
+            )
+        }.getOrNull()
+    }
+
+    suspend fun preparePeer(address: String): PingResponse? = withContext(Dispatchers.IO) {
+        ping(address)?.let { return@withContext it }
+        runCatching {
+            requestOnce(
+                address = address,
+                method = "GET",
+                path = "/api/ping",
+                responseSerializer = PingResponse.serializer(),
+                connectTimeoutMs = CONNECT_TIMEOUT_MS,
+                allowBonding = true,
             )
         }.getOrNull()
     }
@@ -162,8 +188,14 @@ class BluetoothClient(private val context: Context) {
         method: String,
         path: String,
         responseSerializer: KSerializer<Res>,
+        connectTimeoutMs: Long = CONNECT_TIMEOUT_MS,
+        allowBonding: Boolean = false,
     ): Res {
-        val connection = openConnection(address)
+        val connection = openConnection(
+            address = address,
+            connectTimeoutMs = connectTimeoutMs,
+            allowBonding = allowBonding,
+        )
         return try {
             requestOnConnection(
                 connection = connection,
@@ -183,8 +215,14 @@ class BluetoothClient(private val context: Context) {
         body: Req,
         serializer: KSerializer<Req>,
         responseSerializer: KSerializer<Res>,
+        connectTimeoutMs: Long = CONNECT_TIMEOUT_MS,
+        allowBonding: Boolean = false,
     ): Res {
-        val connection = openConnection(address)
+        val connection = openConnection(
+            address = address,
+            connectTimeoutMs = connectTimeoutMs,
+            allowBonding = allowBonding,
+        )
         return try {
             requestOnConnection(
                 connection = connection,
@@ -285,17 +323,119 @@ class BluetoothClient(private val context: Context) {
         return created
     }
 
-    private suspend fun openConnection(address: String): MatchConnection = withContext(Dispatchers.IO) {
+    private suspend fun openConnection(
+        address: String,
+        connectTimeoutMs: Long = CONNECT_TIMEOUT_MS,
+        allowBonding: Boolean = false,
+    ): MatchConnection = withContext(Dispatchers.IO) {
         val adapter = bluetoothAdapter ?: error("Bluetooth is not supported on this device.")
         val device = adapter.getRemoteDevice(address)
         runCatching { adapter.cancelDiscovery() }
-        val socket = device.createInsecureRfcommSocketToServiceRecord(BluetoothProtocol.SERVICE_UUID)
-        socket.connect()
-        MatchConnection(
+        connectSocket(
             address = address,
-            socket = socket,
-            reader = BufferedReader(InputStreamReader(socket.inputStream, Charsets.UTF_8)),
-            writer = BufferedWriter(OutputStreamWriter(socket.outputStream, Charsets.UTF_8)),
+            socket = runCatching {
+                device.createRfcommSocketToServiceRecord(BluetoothProtocol.SECURE_SERVICE_UUID)
+            }.getOrNull(),
+            timeoutMs = connectTimeoutMs,
+        )?.let { return@withContext it }
+
+        if (allowBonding && device.bondState != BluetoothDevice.BOND_BONDED && ensureBonded(device)) {
+            connectSocket(
+                address = address,
+                socket = runCatching {
+                    device.createRfcommSocketToServiceRecord(BluetoothProtocol.SECURE_SERVICE_UUID)
+                }.getOrNull(),
+                timeoutMs = connectTimeoutMs,
+            )?.let { return@withContext it }
+        }
+
+        connectSocket(
+            address = address,
+            socket = runCatching {
+                device.createInsecureRfcommSocketToServiceRecord(BluetoothProtocol.INSECURE_SERVICE_UUID)
+            }.getOrNull(),
+            timeoutMs = connectTimeoutMs,
+        ) ?: error("Could not connect to Bluetooth peer $address.")
+    }
+
+    private suspend fun connectSocket(
+        address: String,
+        socket: BluetoothSocket?,
+        timeoutMs: Long,
+    ): MatchConnection? = withContext(Dispatchers.IO) {
+        if (socket == null) return@withContext null
+        coroutineScope {
+            val connectAttempt = async(Dispatchers.IO) {
+                socket.connect()
+                MatchConnection(
+                    address = address,
+                    socket = socket,
+                    reader = BufferedReader(InputStreamReader(socket.inputStream, Charsets.UTF_8)),
+                    writer = BufferedWriter(OutputStreamWriter(socket.outputStream, Charsets.UTF_8)),
+                )
+            }
+            val connected = withTimeoutOrNull(timeoutMs) {
+                runCatching { connectAttempt.await() }.getOrNull()
+            }
+            if (connected == null) {
+                runCatching { socket.close() }
+                connectAttempt.cancel()
+            }
+            connected
+        }
+    }
+
+    private suspend fun ensureBonded(device: BluetoothDevice): Boolean = withContext(Dispatchers.IO) {
+        if (device.bondState == BluetoothDevice.BOND_BONDED) {
+            return@withContext true
+        }
+
+        val completed = CompletableDeferred<Boolean>()
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action != BluetoothDevice.ACTION_BOND_STATE_CHANGED) {
+                    return
+                }
+                val changedDevice = intentDevice(intent) ?: return
+                if (changedDevice.address != device.address) {
+                    return
+                }
+                when (intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR)) {
+                    BluetoothDevice.BOND_BONDED -> if (!completed.isCompleted) completed.complete(true)
+                    BluetoothDevice.BOND_NONE -> if (!completed.isCompleted) completed.complete(false)
+                }
+            }
+        }
+        val filter = IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
+        ContextCompat.registerReceiver(
+            context,
+            receiver,
+            filter,
+            ContextCompat.RECEIVER_NOT_EXPORTED,
         )
+        try {
+            val started = runCatching { device.createBond() }.getOrDefault(false)
+            if (!started) {
+                return@withContext device.bondState == BluetoothDevice.BOND_BONDED
+            }
+            withTimeoutOrNull(BOND_TIMEOUT_MS) { completed.await() } ?: (device.bondState == BluetoothDevice.BOND_BONDED)
+        } finally {
+            runCatching { context.unregisterReceiver(receiver) }
+        }
+    }
+
+    private fun intentDevice(intent: Intent): BluetoothDevice? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE, BluetoothDevice::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+        }
+    }
+
+    companion object {
+        private const val PROBE_TIMEOUT_MS = 1_200L
+        private const val CONNECT_TIMEOUT_MS = 3_500L
+        private const val BOND_TIMEOUT_MS = 20_000L
     }
 }

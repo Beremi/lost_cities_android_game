@@ -264,6 +264,7 @@ fun LostCitiesAppRoot(vm: AppViewModel = viewModel()) {
                             requestBluetoothAction(BluetoothUiAction.DISCOVERABLE)
                         },
                         onInviteBluetooth = vm::sendInviteToBluetoothPeer,
+                        onStartSoloGame = vm::startSoloGame,
                         onRefreshBluetoothState = vm::refreshBluetoothAvailability,
                         onDisconnect = vm::disconnect,
                     )
@@ -457,6 +458,7 @@ private fun LobbyScreen(
     onEnableBluetooth: () -> Unit,
     onMakeBluetoothVisible: () -> Unit,
     onInviteBluetooth: (BluetoothDiscoveredPeer) -> Unit,
+    onStartSoloGame: () -> Unit,
     onRefreshBluetoothState: () -> Unit,
     onDisconnect: () -> Unit,
 ) {
@@ -494,6 +496,11 @@ private fun LobbyScreen(
                 label = "Bluetooth",
                 active = state.lobbyTransport == LobbyTransport.BLUETOOTH,
                 onClick = { onSelectLobbyTransport(LobbyTransport.BLUETOOTH) },
+            )
+            AppPill(
+                label = "Solo",
+                active = state.lobbyTransport == LobbyTransport.SOLO,
+                onClick = { onSelectLobbyTransport(LobbyTransport.SOLO) },
             )
         }
 
@@ -557,6 +564,15 @@ private fun LobbyScreen(
                                 OutlinedButton(onClick = onMakeBluetoothVisible) {
                                     Text("Make visible")
                                 }
+                            }
+                        }
+
+                        LobbyTransport.SOLO -> {
+                            OutlinedButton(
+                                onClick = onStartSoloGame,
+                                enabled = !state.connected,
+                            ) {
+                                Text("Start Solo Game")
                             }
                         }
                     }
@@ -662,7 +678,7 @@ private fun LobbyScreen(
                         colors = CardDefaults.cardColors(containerColor = darkStoneMid),
                     ) {
                         Text(
-                            text = "No Lost Cities Bluetooth peers found yet.",
+                            text = "No nearby Bluetooth phones found yet.",
                             modifier = Modifier.padding(12.dp),
                             color = warmText,
                         )
@@ -677,7 +693,7 @@ private fun LobbyScreen(
                             colors = CardDefaults.cardColors(containerColor = darkStoneMid),
                         ) {
                             Text(
-                                text = "No other Lost Cities Bluetooth peers found yet.",
+                                text = "No other Bluetooth phones found yet.",
                                 modifier = Modifier.padding(12.dp),
                                 color = warmText,
                             )
@@ -698,6 +714,43 @@ private fun LobbyScreen(
                     }
                 }
             }
+
+            LobbyTransport.SOLO -> {
+                Text(
+                    text = "Play locally against the built-in Lost Cities AI. No LAN or Bluetooth setup is needed.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = warmText,
+                )
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(2.dp, brush = boardBorder, shape = RoundedCornerShape(12.dp)),
+                    colors = CardDefaults.cardColors(containerColor = darkStoneMid),
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        Text(
+                            text = "Solo vs AI",
+                            color = warmText,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontFamily = FontFamily.Serif,
+                        )
+                        Text(
+                            text = "The AI uses the same play, discard, and draw rules as the normal match flow.",
+                            color = warmText,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                        Button(
+                            onClick = onStartSoloGame,
+                            enabled = !state.connected,
+                        ) {
+                            Text("Start Solo Round")
+                        }
+                    }
+                }
+            }
         }
 
         if (state.connected) {
@@ -713,13 +766,19 @@ private fun BluetoothPeerCard(
     peer: BluetoothDiscoveredPeer,
     onInvite: () -> Unit,
 ) {
-    val open = peer.ping.openSlots > 0
-    val playersText = if (peer.ping.players.isEmpty()) {
+    val ping = peer.ping
+    val open = ping?.openSlots?.let { it > 0 } ?: true
+    val playersText = if (ping == null || ping.players.isEmpty()) {
         "no players"
     } else {
-        peer.ping.players.joinToString(prefix = "players: ") {
+        ping.players.joinToString(prefix = "players: ") {
             "P${it.player} ${it.name}"
         }
+    }
+    val actionLabel = when {
+        ping == null && !peer.bonded -> "Pair / Invite"
+        ping == null -> "Check / Invite"
+        else -> "Invite"
     }
 
     Card(
@@ -747,7 +806,11 @@ private fun BluetoothPeerCard(
                         color = warmText,
                     )
                     Text(
-                        text = "Status: ${peer.ping.matchStatus.name.lowercase().replaceFirstChar { c -> if (c.isLowerCase()) c.uppercaseChar() else c }} · $playersText",
+                        text = if (ping == null) {
+                            "Lost Cities not confirmed yet. Keep the app open and the phone visible."
+                        } else {
+                            "Status: ${ping.matchStatus.name.lowercase().replaceFirstChar { c -> if (c.isLowerCase()) c.uppercaseChar() else c }} · $playersText"
+                        },
                         style = MaterialTheme.typography.bodySmall,
                         color = warmText,
                     )
@@ -764,11 +827,11 @@ private fun BluetoothPeerCard(
                         onClick = onInvite,
                         enabled = open,
                     ) {
-                        Text("Invite")
+                        Text(actionLabel)
                     }
                 }
             }
-            if (peer.ping.matchStatus == MatchStatus.ACTIVE) {
+            if (ping?.matchStatus == MatchStatus.ACTIVE) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.SystemClock
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.carcassonne.lan.ai.LostCitiesSoloAi
 import com.carcassonne.lan.data.CardArtPack
 import com.carcassonne.lan.data.LostCitiesPackRepository
 import com.carcassonne.lan.data.MatchMetadataStore
@@ -34,6 +35,9 @@ import com.carcassonne.lan.network.LanHostServer
 import com.carcassonne.lan.network.LanScanner
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -55,15 +59,19 @@ enum class AppTab {
 enum class LobbyTransport {
     LAN,
     BLUETOOTH,
+    SOLO,
 }
 
 data class BluetoothDiscoveredPeer(
     val address: String,
     val name: String,
-    val ping: PingResponse,
+    val ping: PingResponse? = null,
     val bonded: Boolean,
     val isSelf: Boolean,
-)
+) {
+    val reachable: Boolean
+        get() = ping != null
+}
 
 data class LobbyInvite(
     val id: String,
@@ -120,9 +128,12 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     private var bluetoothHostServer: BluetoothHostServer? = null
     private var scanJob: Job? = null
     private var pollJob: Job? = null
+    private var soloAiJob: Job? = null
     private var lastLobbyFullScanElapsedMs: Long = 0L
     private var lastBluetoothRefreshElapsedMs: Long = 0L
     private val scanMutex = Mutex()
+    private var soloAiToken: String? = null
+    private var soloAiPlayer: Int? = null
 
     private val _uiState = MutableStateFlow(AppUiState())
     val uiState: StateFlow<AppUiState> = _uiState.asStateFlow()
@@ -196,6 +207,10 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                             }
                             delay(IDLE_LOOP_INTERVAL_MS)
                         }
+
+                        LobbyTransport.SOLO -> {
+                            delay(IDLE_LOOP_INTERVAL_MS)
+                        }
                     }
                 } else {
                     delay(IDLE_LOOP_INTERVAL_MS)
@@ -213,42 +228,115 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun ensureLocalLobbyServer(forceRestart: Boolean = false) {
-        val state = _uiState.value
-        val manifest = state.manifest ?: return
-        val localServerId = state.localServerId.ifBlank { return }
-        if (!forceRestart && hostServer != null) return
-
         viewModelScope.launch {
-            if (forceRestart) {
-                hostServer?.stop()
-                hostServer = null
-            }
+            ensureLocalLobbyServerReady(forceRestart)
+        }
+    }
 
-            val manager = if (!forceRestart && hostManager != null) {
-                hostManager!!.apply {
-                    updateLobbyHostName(state.playerName)
-                    configureGameRules(GameRules(usePurple = state.usePurple))
-                }
-            } else {
-                HostGameManager(
-                    deckManifest = manifest,
-                    hostName = state.playerName,
-                    serverId = localServerId,
-                    initialRules = GameRules(usePurple = state.usePurple),
-                )
-            }
+    private suspend fun ensureLocalLobbyServerReady(forceRestart: Boolean = false): Boolean {
+        val state = _uiState.value
+        val manifest = state.manifest ?: return false
+        val localServerId = state.localServerId.ifBlank { return false }
+        if (!forceRestart && hostServer != null) return true
 
-            val server = LanHostServer(manager, metadataStore)
-            runCatching { server.start(state.serverPort) }.onFailure { error ->
+        if (forceRestart) {
+            hostServer?.stop()
+            hostServer = null
+            bluetoothHostServer?.stop()
+            bluetoothHostServer = null
+            hostManager = null
+        }
+
+        val manager = if (!forceRestart && hostManager != null) {
+            hostManager!!.apply {
+                updateLobbyHostName(state.playerName)
+                configureGameRules(GameRules(usePurple = state.usePurple))
+            }
+        } else {
+            HostGameManager(
+                deckManifest = manifest,
+                hostName = state.playerName,
+                serverId = localServerId,
+                initialRules = GameRules(usePurple = state.usePurple),
+            )
+        }
+
+        val server = LanHostServer(manager, metadataStore)
+        return runCatching { server.start(state.serverPort) }
+            .onFailure { error ->
                 _uiState.update {
                     it.copy(statusMessage = "Could not start local lobby server: ${error.message ?: "error"}")
+                }
+            }
+            .map {
+                hostManager = manager
+                hostServer = server
+                ensureBluetoothLobbyServer()
+                true
+            }
+            .getOrElse { false }
+    }
+
+    fun startSoloGame() {
+        val state = _uiState.value
+        if (state.connected) {
+            _uiState.update { it.copy(statusMessage = "Disconnect from the current match before starting solo play.") }
+            return
+        }
+        if (state.manifest == null) {
+            _uiState.update { it.copy(statusMessage = "Deck is still loading.") }
+            return
+        }
+
+        stopPollingLoop()
+        soloAiJob?.cancel()
+        viewModelScope.launch {
+            if (!ensureLocalLobbyServerReady(forceRestart = true)) {
+                return@launch
+            }
+            val manager = hostManager ?: return@launch
+            val playerName = _uiState.value.playerName.ifBlank { NameGenerator.generate() }
+            val aiName = "Stone Sage 9001"
+            val humanJoin = manager.joinOrReconnect(playerName)
+            val aiJoin = manager.joinOrReconnect(aiName)
+            if (!humanJoin.ok || !aiJoin.ok || humanJoin.token == null || humanJoin.player == null) {
+                _uiState.update {
+                    it.copy(statusMessage = humanJoin.error ?: aiJoin.error ?: "Could not start the solo round.")
                 }
                 return@launch
             }
 
-            hostManager = manager
-            hostServer = server
-            ensureBluetoothLobbyServer()
+            soloAiToken = aiJoin.token
+            soloAiPlayer = aiJoin.player
+            val match = manager.snapshot()
+            val session = ClientSession(
+                transport = PeerTransport.LAN,
+                hostAddress = LOCAL_HOST,
+                port = _uiState.value.serverPort,
+                token = humanJoin.token,
+                player = humanJoin.player,
+                playerName = playerName,
+            )
+            _uiState.update {
+                it.copy(
+                    lobbyTransport = LobbyTransport.SOLO,
+                    connected = true,
+                    session = session,
+                    match = match,
+                    canAct = match.status == MatchStatus.ACTIVE && match.lostCities.turnPlayer == session.player,
+                    tab = AppTab.MATCH,
+                    pendingInvites = emptyList(),
+                    activeInvite = null,
+                    selectedCardId = null,
+                    newlyAcquiredCardIds = emptySet(),
+                    turnHintCards = match.status == MatchStatus.ACTIVE &&
+                        match.lostCities.turnPlayer == session.player &&
+                        match.lostCities.phase == LostCitiesTurnPhase.PLAY,
+                    statusMessage = "Solo round started against ${match.players[aiJoin.player ?: 2]?.name ?: aiName}.",
+                    rematchPeer = null,
+                )
+            }
+            maybeRunSoloAi(match)
         }
     }
 
@@ -466,7 +554,45 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun sendInviteToBluetoothPeer(peer: BluetoothDiscoveredPeer) {
-        sendInviteToPeer(peerEndpointOf(peer))
+        viewModelScope.launch {
+            refreshBluetoothAvailability()
+            if (!_uiState.value.bluetoothEnabled) {
+                _uiState.update { it.copy(statusMessage = "Enable Bluetooth before inviting this phone.") }
+                return@launch
+            }
+
+            val deviceLabel = peer.name.ifBlank { peer.address }
+            val status = if (peer.bonded) {
+                "Connecting to $deviceLabel..."
+            } else {
+                "Pairing with $deviceLabel..."
+            }
+            _uiState.update { it.copy(statusMessage = status) }
+
+            val resolvedPing = peer.ping ?: runCatching { bluetoothClient.preparePeer(peer.address) }.getOrNull()
+            if (resolvedPing == null) {
+                _uiState.update {
+                    it.copy(
+                        statusMessage = "Could not reach $deviceLabel over Bluetooth. Keep Lost Cities open and make the phone visible.",
+                    )
+                }
+                refreshBluetoothPeersInternal(forceDiscovery = false)
+                return@launch
+            }
+
+            val resolvedPeer = peer.copy(
+                ping = resolvedPing,
+                isSelf = resolvedPing.serverId == _uiState.value.localServerId,
+            )
+            _uiState.update { current ->
+                current.copy(
+                    bluetoothPeers = current.bluetoothPeers.map { item ->
+                        if (item.address == peer.address) resolvedPeer else item
+                    },
+                )
+            }
+            sendInviteToPeer(peerEndpointOf(resolvedPeer))
+        }
     }
 
     private fun sendInviteToPeer(target: PeerEndpoint) {
@@ -701,6 +827,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         when (_uiState.value.lobbyTransport) {
             LobbyTransport.LAN -> refreshDiscoveredHosts(forceFull)
             LobbyTransport.BLUETOOTH -> refreshBluetoothPeers(forceFull)
+            LobbyTransport.SOLO -> Unit
         }
     }
 
@@ -827,17 +954,24 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 val visiblePeers = withContext(Dispatchers.IO) {
-                    rawDevices.mapNotNull { device ->
-                        val ping = runCatching { bluetoothClient.ping(device.address) }.getOrNull() ?: return@mapNotNull null
-                        BluetoothDiscoveredPeer(
-                            address = device.address,
-                            name = device.name,
-                            ping = ping,
-                            bonded = device.bonded,
-                            isSelf = ping.serverId == state.localServerId,
-                        )
+                    coroutineScope {
+                        rawDevices.distinctBy { it.address }
+                            .map { device ->
+                                async {
+                                    val ping = runCatching { bluetoothClient.ping(device.address) }.getOrNull()
+                                    BluetoothDiscoveredPeer(
+                                        address = device.address,
+                                        name = device.name,
+                                        ping = ping,
+                                        bonded = device.bonded,
+                                        isSelf = ping?.serverId == state.localServerId,
+                                    )
+                                }
+                            }
+                            .awaitAll()
                     }.sortedWith(
                         compareBy<BluetoothDiscoveredPeer> { !it.bonded }
+                            .thenByDescending { it.reachable }
                             .thenBy { it.name.lowercase(Locale.ROOT) }
                             .thenBy { it.address },
                     )
@@ -846,7 +980,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
                 val invites = withContext(Dispatchers.IO) {
                     buildList {
-                        for (peer in visiblePeers) {
+                        for (peer in visiblePeers.filter { it.reachable && !it.isSelf }) {
                             val response = runCatching {
                                 bluetoothClient.inviteList(peer.address, state.localServerId)
                             }.getOrNull() ?: continue
@@ -966,8 +1100,8 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             transport = PeerTransport.BLUETOOTH,
             address = peer.address,
             port = null,
-            displayName = peer.name.ifBlank { peer.ping.hostName },
-            serverId = peer.ping.serverId,
+            displayName = peer.name.ifBlank { peer.ping?.hostName.orEmpty() },
+            serverId = peer.ping?.serverId,
         )
     }
 
@@ -1191,21 +1325,82 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             val match = response.match
-            val oldHand = state.match?.lostCities?.players?.get(session.player)?.hand.orEmpty()
-            val newHand = match.lostCities.players[session.player]?.hand.orEmpty()
-            val acquired = newHand.filterNot(oldHand::contains).toSet()
+            applyLocalMatchUpdate(match)
+            maybeRunSoloAi(match)
+        }
+    }
 
-            _uiState.update {
-                it.copy(
-                    match = match,
-                    canAct = match.status == MatchStatus.ACTIVE && match.lostCities.turnPlayer == session.player,
-                    selectedCardId = null,
-                    newlyAcquiredCardIds = acquired,
-                    turnHintCards = match.status == MatchStatus.ACTIVE &&
-                        match.lostCities.turnPlayer == session.player &&
-                        match.lostCities.phase == LostCitiesTurnPhase.PLAY,
-                    statusMessage = match.lastEvent.ifBlank { describeMatch(match, session.player) },
+    private fun applyLocalMatchUpdate(match: MatchState) {
+        val session = _uiState.value.session ?: return
+        val oldHand = _uiState.value.match?.lostCities?.players?.get(session.player)?.hand.orEmpty()
+        val newHand = match.lostCities.players[session.player]?.hand.orEmpty()
+        val acquired = newHand.filterNot(oldHand::contains).toSet()
+
+        _uiState.update {
+            it.copy(
+                match = match,
+                canAct = match.status == MatchStatus.ACTIVE && match.lostCities.turnPlayer == session.player,
+                selectedCardId = null,
+                newlyAcquiredCardIds = acquired,
+                turnHintCards = match.status == MatchStatus.ACTIVE &&
+                    match.lostCities.turnPlayer == session.player &&
+                    match.lostCities.phase == LostCitiesTurnPhase.PLAY,
+                statusMessage = match.lastEvent.ifBlank { describeMatch(match, session.player) },
+            )
+        }
+    }
+
+    private fun maybeRunSoloAi(match: MatchState?) {
+        val aiToken = soloAiToken ?: return
+        val aiPlayer = soloAiPlayer ?: return
+        val session = _uiState.value.session ?: return
+        if (_uiState.value.lobbyTransport != LobbyTransport.SOLO || !_uiState.value.connected) return
+        if (match == null || match.status != MatchStatus.ACTIVE || match.lostCities.turnPlayer != aiPlayer) return
+
+        soloAiJob?.cancel()
+        soloAiJob = viewModelScope.launch {
+            delay(280L)
+            while (isActive) {
+                val currentMatch = hostManager?.snapshot() ?: break
+                if (currentMatch.status != MatchStatus.ACTIVE || currentMatch.lostCities.turnPlayer != aiPlayer) {
+                    break
+                }
+
+                val plan = LostCitiesSoloAi.chooseTurn(
+                    match = currentMatch,
+                    aiPlayer = aiPlayer,
+                    cardById = _uiState.value.cardById,
+                    activeSuits = suitOrderIds(),
+                    rules = currentMatch.rules,
                 )
+                if (plan == null) {
+                    _uiState.update { it.copy(statusMessage = "Solo AI could not find a legal move.") }
+                    break
+                }
+
+                var updatedMatch = currentMatch
+                for (step in plan.steps) {
+                    val response = hostManager?.applyLostCitiesAction(
+                        token = aiToken,
+                        action = step.action,
+                        cardId = step.cardId,
+                        suit = step.suit,
+                    )
+                    if (response == null || !response.ok || response.match == null) {
+                        _uiState.update { it.copy(statusMessage = response?.error ?: "Solo AI action failed.") }
+                        return@launch
+                    }
+                    updatedMatch = response.match
+                }
+
+                applyLocalMatchUpdate(updatedMatch)
+                if (updatedMatch.status != MatchStatus.ACTIVE || updatedMatch.lostCities.turnPlayer != aiPlayer) {
+                    break
+                }
+                if (updatedMatch.lostCities.turnPlayer == session.player) {
+                    break
+                }
+                delay(160L)
             }
         }
     }
@@ -1426,6 +1621,28 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
         val state = _uiState.value
         val match = state.match
         val session = state.session
+        if (state.lobbyTransport == LobbyTransport.SOLO && state.connected && match?.status == MatchStatus.FINISHED && session != null) {
+            val aiToken = soloAiToken
+            if (aiToken == null) {
+                _uiState.update { it.copy(statusMessage = "Solo rematch is not available.") }
+                return
+            }
+            viewModelScope.launch {
+                val requested = hostManager?.applyLostCitiesAction(session.token, "request_rematch", "", null)
+                if (requested == null || !requested.ok) {
+                    _uiState.update { it.copy(statusMessage = requested?.error ?: "Could not start the solo rematch.") }
+                    return@launch
+                }
+                val accepted = hostManager?.applyLostCitiesAction(aiToken, "accept_rematch", "", null)
+                if (accepted == null || !accepted.ok || accepted.match == null) {
+                    _uiState.update { it.copy(statusMessage = accepted?.error ?: "Solo rematch failed.") }
+                    return@launch
+                }
+                applyLocalMatchUpdate(accepted.match)
+                maybeRunSoloAi(accepted.match)
+            }
+            return
+        }
         if (state.connected && match?.status == MatchStatus.FINISHED && session != null) {
             performAction("request_rematch", "", null)
             return
@@ -1507,10 +1724,16 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     fun disconnect() {
         stopPollingLoop()
+        soloAiJob?.cancel()
         viewModelScope.launch {
             _uiState.value.session?.let { session ->
                 runCatching { leaveSession(session) }
             }
+            soloAiToken?.let { token ->
+                runCatching { hostManager?.removeToken(token) }
+            }
+            soloAiToken = null
+            soloAiPlayer = null
             _uiState.update {
                 it.copy(
                     connected = false,

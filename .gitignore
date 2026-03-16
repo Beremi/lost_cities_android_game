@@ -10,6 +10,10 @@ android/local.properties
 android/.idea/
 *.iml
 
+# Python caches
+__pycache__/
+*.py[cod]
+
 # Imported source packs and generated review exports
 design_reviews/
 lost_cities_mobile_pack/

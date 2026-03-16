@@ -43,37 +43,52 @@ class BluetoothHostServer(
         get() = context.getSystemService(BluetoothManager::class.java)?.adapter
 
     @Volatile
-    private var serverSocket: BluetoothServerSocket? = null
+    private var serverSockets: List<BluetoothServerSocket> = emptyList()
 
     @Volatile
-    private var acceptJob: Job? = null
+    private var acceptJobs: List<Job> = emptyList()
 
     suspend fun start() {
         withContext(Dispatchers.IO) {
             val adapter = bluetoothAdapter ?: return@withContext
             if (!adapter.isEnabled) return@withContext
-            if (acceptJob?.isActive == true && serverSocket != null) return@withContext
+            if (acceptJobs.any { it.isActive } && serverSockets.isNotEmpty()) return@withContext
             stop()
-            val created = adapter.listenUsingInsecureRfcommWithServiceRecord(
-                BluetoothProtocol.SERVICE_NAME,
-                BluetoothProtocol.SERVICE_UUID,
-            )
-            serverSocket = created
-            acceptJob = ioScope.launch {
-                acceptLoop(created)
+            val createdSockets = buildList {
+                runCatching {
+                    adapter.listenUsingRfcommWithServiceRecord(
+                        BluetoothProtocol.SECURE_SERVICE_NAME,
+                        BluetoothProtocol.SECURE_SERVICE_UUID,
+                    )
+                }.getOrNull()?.let(::add)
+                runCatching {
+                    adapter.listenUsingInsecureRfcommWithServiceRecord(
+                        BluetoothProtocol.INSECURE_SERVICE_NAME,
+                        BluetoothProtocol.INSECURE_SERVICE_UUID,
+                    )
+                }.getOrNull()?.let(::add)
+            }
+            if (createdSockets.isEmpty()) {
+                error("Could not open any Bluetooth lobby sockets.")
+            }
+            serverSockets = createdSockets
+            acceptJobs = createdSockets.map { socket ->
+                ioScope.launch { acceptLoop(socket) }
             }
         }
     }
 
     fun stop() {
-        acceptJob?.cancel()
-        acceptJob = null
-        runCatching { serverSocket?.close() }
-        serverSocket = null
+        acceptJobs.forEach { it.cancel() }
+        acceptJobs = emptyList()
+        serverSockets.forEach { socket ->
+            runCatching { socket.close() }
+        }
+        serverSockets = emptyList()
     }
 
     private suspend fun acceptLoop(activeSocket: BluetoothServerSocket) {
-        while ((acceptJob?.isActive == true) && serverSocket === activeSocket) {
+        while (acceptJobs.any { it.isActive } && serverSockets.contains(activeSocket)) {
             val socket = runCatching { activeSocket.accept() }.getOrNull() ?: break
             ioScope.launch {
                 handleClient(socket)

@@ -15,6 +15,17 @@ cd /home/ber0061/Repositories/lost_cities/android
 
 Then install to an emulator/device as documented in [`instructions.md`](/home/ber0061/Repositories/lost_cities/instructions.md).
 
+## Web Arena
+
+The repo also includes a LAN-oriented Python web server that reuses the Lost Cities v3 assets and the Python AI lab bots.
+
+```bash
+cd /home/ber0061/Repositories/lost_cities
+python -m web_server --host 0.0.0.0 --port 8743
+```
+
+Then open `http://<your-lan-ip>:8743` from another device on the same network.
+
 ## App goals
 
 - Discover peers on the local network by IP.

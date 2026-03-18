@@ -1,0 +1,27 @@
+{
+  "format": "lost_cities_inference_v1",
+  "run_name": "strong_phase6_20260317_181620",
+  "tag": "best",
+  "source_checkpoint": "./lost_cities_runs/strong_phase6_20260317_181620/final_model.pt",
+  "source_iteration": 460,
+  "max_turns": 200,
+  "model_cfg": {
+    "d_model": 256,
+    "nhead": 8,
+    "num_layers": 6,
+    "ff_mult": 4,
+    "dropout": 0.1
+  },
+  "search_cfg": {
+    "num_determinizations": 6,
+    "max_actions_considered": 32,
+    "opponent_reply_depth": 1,
+    "search_temperature": 0.25,
+    "prior_weight": 0.15,
+    "belief_mix_uniform": 0.35,
+    "use_belief_guidance": true,
+    "inference_amp": true,
+    "inference_batch_limit": 1024
+  },
+  "weights_file": "model.npz"
+}

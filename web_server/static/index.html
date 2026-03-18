@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lost Cities Web Arena</title>
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="side-panel">
+      <div class="panel-block brand-block">
+        <p class="eyebrow">LAN-ready web arena</p>
+        <h1>Lost Cities</h1>
+        <p class="subtle">
+          Android v3-inspired local-network lobby, human matches, and AI lab.
+        </p>
+      </div>
+
+      <div class="panel-block status-block">
+        <div class="status-row">
+          <span>Server</span>
+          <strong id="server-status">Checking…</strong>
+        </div>
+        <div class="status-row">
+          <span>LAN URL</span>
+          <strong id="server-url">Unknown</strong>
+        </div>
+        <div class="status-row">
+          <span>Connected users</span>
+          <strong id="connected-users">0</strong>
+        </div>
+      </div>
+
+      <div class="panel-block">
+        <div class="section-heading-row">
+          <h2>Available AIs</h2>
+          <button id="refresh-agents" class="ghost-button" type="button">Refresh</button>
+        </div>
+        <p class="subtle">
+          Built-ins, uploaded agents, and downloadable zip packages all live here.
+        </p>
+        <div id="agent-list" class="agent-list">
+          <p class="empty-state">No agents loaded yet.</p>
+        </div>
+      </div>
+
+      <div class="panel-block">
+        <h2>Upload Agent Zip</h2>
+        <form id="agent-upload-form" class="stack-form">
+          <label class="field-label" for="agent-zip">Agent package</label>
+          <input id="agent-zip" name="agent-zip" type="file" accept=".zip">
+          <label class="field-label" for="agent-name">Display name</label>
+          <input id="agent-name" name="agent-name" type="text" placeholder="Optional display name">
+          <button type="submit">Upload package</button>
+        </form>
+        <p id="agent-upload-status" class="subtle"></p>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <header class="topbar">
+        <div class="tab-row" role="tablist" aria-label="Primary">
+          <button class="tab-button is-active" data-tab-target="lobby" type="button">Lobby</button>
+          <button class="tab-button" data-tab-target="match" type="button">Match</button>
+          <button class="tab-button" data-tab-target="lab" type="button">AI Lab</button>
+          <button class="tab-button" data-tab-target="docs" type="button">Docs</button>
+        </div>
+        <div class="toolbar">
+          <button id="refresh-all" class="ghost-button" type="button">Refresh</button>
+        </div>
+      </header>
+
+      <section id="tab-lobby" class="tab-panel is-active">
+        <div class="hero-card">
+          <div>
+            <p class="eyebrow">Nearby lobby</p>
+            <h2>Challenge humans or AIs from one board.</h2>
+          </div>
+          <p class="subtle">
+            Start human-vs-human, human-vs-AI, or jump into the AI lab without leaving the same interface.
+          </p>
+        </div>
+
+        <div class="two-column">
+          <section class="surface-card">
+            <h3>Human Player</h3>
+            <form id="human-session-form" class="stack-form">
+              <label class="field-label" for="player-name">Player name</label>
+              <input id="player-name" name="player-name" type="text" placeholder="Explorer name">
+              <label class="field-label inline-toggle">
+                <input id="use-purple" name="use-purple" type="checkbox">
+                <span>Enable purple long-game variant</span>
+              </label>
+              <div class="button-row">
+                <button id="join-lobby" type="button">Join lobby</button>
+                <button id="refresh-lobby" class="ghost-button" type="button">Refresh lobby</button>
+              </div>
+            </form>
+            <p id="session-status" class="subtle"></p>
+          </section>
+
+          <section class="surface-card">
+            <h3>Start Match</h3>
+            <form id="challenge-form" class="stack-form">
+              <label class="field-label" for="challenge-mode">Mode</label>
+              <select id="challenge-mode" name="challenge-mode">
+                <option value="human-human">Human vs Human</option>
+                <option value="human-ai">Human vs AI</option>
+              </select>
+              <label class="field-label" for="challenge-target">Opponent / AI</label>
+              <select id="challenge-target" name="challenge-target"></select>
+              <div class="button-row">
+                <button id="create-match" type="submit">Create match</button>
+                <button id="open-current-match" class="ghost-button" type="button">Open current match</button>
+              </div>
+            </form>
+            <p id="challenge-status" class="subtle"></p>
+          </section>
+        </div>
+
+        <div class="two-column">
+          <section class="surface-card">
+            <div class="section-heading-row">
+              <h3>Connected Users</h3>
+              <span class="pill" id="user-count-pill">0 online</span>
+            </div>
+            <div id="user-list" class="stack-list">
+              <p class="empty-state">No users connected yet.</p>
+            </div>
+          </section>
+
+          <section class="surface-card">
+            <div class="section-heading-row">
+              <h3>Open Matches</h3>
+              <span class="pill" id="match-count-pill">0 listed</span>
+            </div>
+            <div id="match-list" class="stack-list">
+              <p class="empty-state">No open matches yet.</p>
+            </div>
+          </section>
+        </div>
+
+        <div class="two-column">
+          <section class="surface-card">
+            <div class="section-heading-row">
+              <h3>Challenges</h3>
+              <span class="pill" id="challenge-count-pill">0 pending</span>
+            </div>
+            <div id="challenge-list" class="stack-list">
+              <p class="empty-state">No human challenges yet.</p>
+            </div>
+          </section>
+
+          <section class="surface-card">
+            <div class="section-heading-row">
+              <h3>Announcements</h3>
+              <span class="pill">live</span>
+            </div>
+            <div id="announcement-list" class="log-list">
+              <p class="empty-state">No announcements yet.</p>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="tab-match" class="tab-panel">
+        <div class="surface-card match-meta-card">
+          <div class="match-meta-grid">
+            <div>
+              <p class="eyebrow">Current board</p>
+              <h2 id="match-title">No active match</h2>
+            </div>
+            <div class="score-pair">
+              <div class="score-chip">
+                <span>You</span>
+                <strong id="score-player-1">0</strong>
+              </div>
+              <div class="score-chip">
+                <span>Opponent</span>
+                <strong id="score-player-2">0</strong>
+              </div>
+            </div>
+          </div>
+          <p id="match-status-message" class="subtle">Join or create a match from the lobby.</p>
+        </div>
+
+        <section class="surface-card quick-play-card">
+          <div class="section-heading-row">
+            <h3>Quick Play</h3>
+            <button id="clear-board-selection" class="ghost-button" type="button">Clear card</button>
+          </div>
+          <p id="match-action-hint" class="subtle">
+            Join or create a match from the lobby.
+          </p>
+        </section>
+
+        <div class="board-shell">
+          <div class="board-row board-row-opponent-hand">
+            <span class="row-label">Opponent hand</span>
+            <div id="opponent-hand" class="hand-strip"></div>
+          </div>
+
+          <div class="board-row">
+            <span class="row-label">Opponent expeditions</span>
+            <div id="opponent-expeditions" class="lane-grid"></div>
+          </div>
+
+          <div class="board-row board-row-middle">
+            <span class="row-label">Discard piles</span>
+            <div id="discard-piles" class="lane-grid"></div>
+            <div class="draw-pile-block">
+              <span class="draw-label">Draw pile</span>
+              <div id="draw-pile" class="card-slot draw-slot"></div>
+            </div>
+          </div>
+
+          <div class="board-row">
+            <span class="row-label">Your expeditions</span>
+            <div id="player-expeditions" class="lane-grid"></div>
+          </div>
+
+          <div class="board-row board-row-player-hand">
+            <span class="row-label">Your hand</span>
+            <div id="player-hand" class="hand-strip"></div>
+          </div>
+        </div>
+
+        <div class="two-column">
+          <section class="surface-card">
+            <h3>Manual Fallback</h3>
+            <p class="subtle">
+              The board clicks are the primary flow. Use this only if you want to type an action directly.
+            </p>
+            <form id="action-form" class="stack-form">
+              <label class="field-label" for="action-card-id">Selected card</label>
+              <input id="action-card-id" name="action-card-id" type="text" placeholder="card id">
+              <label class="field-label" for="action-type">Action</label>
+              <select id="action-type" name="action-type">
+                <option value="play_expedition">Play expedition</option>
+                <option value="discard">Discard</option>
+                <option value="draw_deck">Draw from deck</option>
+                <option value="draw_discard">Draw from discard</option>
+                <option value="undo">Undo pending move</option>
+              </select>
+              <label class="field-label" for="action-suit">Discard suit</label>
+              <input id="action-suit" name="action-suit" type="text" placeholder="yellow / blue / white / green / red / purple">
+              <div class="button-row">
+                <button type="submit">Submit action</button>
+                <button id="poll-match" class="ghost-button" type="button">Poll match</button>
+              </div>
+            </form>
+            <p id="action-status" class="subtle"></p>
+          </section>
+
+          <section class="surface-card">
+            <h3>Replay / AI Step View</h3>
+            <div class="button-row">
+              <button id="replay-prev" class="ghost-button" type="button">Previous</button>
+              <button id="replay-next" type="button">Next</button>
+            </div>
+            <p id="replay-status" class="subtle">No replay loaded.</p>
+            <div id="replay-log" class="log-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="tab-lab" class="tab-panel">
+        <div class="two-column">
+          <section class="surface-card">
+            <h3>Run Simulation Batch</h3>
+            <form id="simulation-form" class="stack-form">
+              <label class="field-label" for="sim-agent-a">Agent A</label>
+              <select id="sim-agent-a" name="sim-agent-a"></select>
+              <label class="field-label" for="sim-agent-b">Agent B</label>
+              <select id="sim-agent-b" name="sim-agent-b"></select>
+              <label class="field-label" for="sim-rounds">Rounds</label>
+              <input id="sim-rounds" name="sim-rounds" type="number" min="1" max="500" value="10">
+              <button type="submit">Run simulation</button>
+            </form>
+            <p id="simulation-status" class="subtle"></p>
+            <div id="simulation-summary" class="metric-grid"></div>
+          </section>
+
+          <section class="surface-card">
+            <h3>Create AI Replay</h3>
+            <form id="replay-create-form" class="stack-form">
+              <label class="field-label" for="replay-agent-a">Agent A</label>
+              <select id="replay-agent-a" name="replay-agent-a"></select>
+              <label class="field-label" for="replay-agent-b">Agent B</label>
+              <select id="replay-agent-b" name="replay-agent-b"></select>
+              <button type="submit">Create step-through game</button>
+            </form>
+            <p id="replay-create-status" class="subtle"></p>
+            <div id="replay-summary" class="stack-list"></div>
+          </section>
+        </div>
+
+        <section class="surface-card">
+          <div class="section-heading-row">
+            <h3>Detailed Results</h3>
+            <button id="clear-results" class="ghost-button" type="button">Clear</button>
+          </div>
+          <div id="simulation-results" class="log-list"></div>
+        </section>
+      </section>
+
+      <section id="tab-docs" class="tab-panel">
+        <div class="hero-card">
+          <div>
+            <p class="eyebrow">Agent packaging</p>
+            <h2>Build an AI once, run it in the simulator and the arena.</h2>
+          </div>
+          <p class="subtle">
+            The downloadable markdown describes the simulator input, the required response shape, and how to organize an uploadable zip package.
+          </p>
+        </div>
+
+        <div class="two-column">
+          <section class="surface-card">
+            <h3>Download spec</h3>
+            <a id="docs-download-link" class="primary-link" href="#" download="lost-cities-agent-api.md">Download AI API markdown</a>
+            <p class="subtle">
+              This file is meant to be shared with agent authors and bundled with example agents.
+            </p>
+          </section>
+
+          <section class="surface-card">
+            <h3>What the package contains</h3>
+            <ul class="flat-list">
+              <li>A manifest with the agent id, title, entry point, and runtime metadata.</li>
+              <li>Implementation code plus optional weight/data files.</li>
+              <li>An adapter entry point that can answer simulator requests deterministically.</li>
+              <li>Enough metadata for download, upload, and permanent side-panel registration.</li>
+            </ul>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="agent-card-template">
+    <article class="agent-card">
+      <div>
+        <p class="agent-type"></p>
+        <h3></h3>
+        <p class="agent-description subtle"></p>
+      </div>
+      <div class="button-row compact">
+        <button class="ghost-button agent-download" type="button">Download zip</button>
+        <button class="agent-challenge" type="button">Challenge</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="./app.js" type="module"></script>
+</body>
+</html>

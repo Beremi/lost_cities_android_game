@@ -1,0 +1,7 @@
+{
+  "id": "lost_cities_phase6_numpy",
+  "name": "Lost Cities Phase 6 NumPy",
+  "description": "Phase 6 best checkpoint exported to a pure NumPy runtime agent.",
+  "entrypoint": "agent.py:build_agent",
+  "supports_purple": false
+}

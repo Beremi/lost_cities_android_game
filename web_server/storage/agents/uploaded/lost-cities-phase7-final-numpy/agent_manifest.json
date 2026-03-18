@@ -1,0 +1,7 @@
+{
+  "id": "lost_cities_phase7_final_numpy",
+  "name": "Lost Cities Phase 7 Final",
+  "description": "Pure NumPy export of the end-of-phase 7 Lost Cities policy.",
+  "entrypoint": "agent.py:build_agent",
+  "supports_purple": false
+}

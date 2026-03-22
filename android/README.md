@@ -12,10 +12,10 @@ This Android module is a two-player Lost Cities build for local-network play.
 
 ## Current debug package
 
-- Application id: `com.carcassonne.lan`
-- Main activity: `com.carcassonne.lan/.MainActivity`
+- Application id: `com.lost_cities.lan`
+- Main activity: `com.lost_cities.lan/.MainActivity`
 
-The visible product is Lost Cities; the debug package id has not been renamed yet.
+The visible product and the debug package id are both Lost Cities branded.
 
 ## Build
 

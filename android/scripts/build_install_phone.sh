@@ -5,7 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
 DEVICE_SERIAL="${1:-${DEVICE_SERIAL:-96c0a906}}"
-APP_ID="${APP_ID:-com.carcassonne.lan}"
+APP_ID="${APP_ID:-com.lost_cities.lan}"
 MAIN_ACTIVITY="${MAIN_ACTIVITY:-.MainActivity}"
 APK_PATH="app/build/outputs/apk/debug/app-debug.apk"
 CLEAN_INSTALL="${CLEAN_INSTALL:-1}"

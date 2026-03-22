@@ -8,7 +8,7 @@ DEVICE_A="${1:-emulator-5554}"
 DEVICE_B="${2:-emulator-5556}"
 LAN_PORT="${LAN_PORT:-18473}"
 LAN_PORT_B="${LAN_PORT_B:-$((LAN_PORT + 1))}"
-APP_ID="${APP_ID:-com.carcassonne.lan}"
+APP_ID="${APP_ID:-com.lost_cities.lan}"
 MAIN_ACTIVITY="${MAIN_ACTIVITY:-.MainActivity}"
 APK_PATH="app/build/outputs/apk/debug/app-debug.apk"
 

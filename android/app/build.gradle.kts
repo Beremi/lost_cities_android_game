@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.carcassonne.lan"
+    namespace = "com.lost_cities.lan"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.carcassonne.lan"
+        applicationId = "com.lost_cities.lan"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
